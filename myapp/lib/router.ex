@@ -15,6 +15,8 @@ defmodule Myapp.Router do
   end
 
   get "/" do
+    {:ok, pokemon} = Myapp.ApiServer.get_pokemon(1)
+
     page = EEx.eval_file("templates/home.html", name: ["Heather"])
     conn
     |> put_resp_header("content-type", "text/html")
