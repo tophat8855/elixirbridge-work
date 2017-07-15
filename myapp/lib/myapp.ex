@@ -1,18 +1,23 @@
 defmodule Myapp do
-  @moduledoc """
-  Documentation for Myapp.
-  """
+  use Application
 
   @doc """
-  Hello world.
+  Start Myapp here with arguments
 
-  ## Examples
+  Examples:
 
-      iex> Myapp.hello
-      :world
-
+    Myapp.start([], [])
   """
-  def hello do
-    :world
+  def start(_type, _args) do
+    import Supervisor.Spec, warn: false
+
+    children = [
+      worker(Myapp.Router, [])
+    ]
+
+    opts = [
+      strategy: :one_for_one, name: Myapp.Supervisor
+    ]
+    Supervisor.start_link(children, opts)
   end
 end
