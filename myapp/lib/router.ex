@@ -14,6 +14,13 @@ defmodule Myapp.Router do
     |> send_resp(200, "Hello!")
   end
 
+  get "/" do
+    page = EEx.eval_file("templates/home.html", name: ["Heather"])
+    conn
+    |> put_resp_header("content-type", "text/html")
+    |> send_resp(200, page)
+  end
+
   match _ do
     conn
     |> send_resp(404, "Not found")
